@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>drag event</title>
+  <style>
+    #A{
+        width:200px;
+        height:200px;
+        background: pink;
+        margin:10px;
+        z-index:100;
+      }
+
+      #B {
+        width:400px;
+        height:300px;
+        background: grey;
+        position: fixed;
+        right:0px;
+        bottom:0px;
+      }
+  </style>
+</head>
+<body>
+  <div id="A"></div>
+  <div id="B"></div>
+  <script>
+    const element = document.getElementById('A');
+      const container = document.getElementById('B');
+
+      function drag(element, container){
+          function getEvent(event) {
+           return event || window.event;
+          }
+          let position = {
+             offsetX:0,
+             offsetY:0,
+             state:0
+          }
+          element.addEventListener('mousedown', function(event) {
+             const e = getEvent(event);
+             position.offsetX = e.offsetX;
+             position.offsetY = e.offsetY;
+             position.state = 1;
+          }, false)
+
+          document.addEventListener('mousemove', function(event) {
+             const e = getEvent(event);
+             if(position.state) {
+                 element.endX = e.clientX;
+                 element.endY = e.clientY;
+                 element.style.position = 'absolute';
+                 element.style.top = element.endY - position.offsetY +'px';
+                 element.style.left = element.endX - position.offsetX + 'px';
+             } 
+          }, false)
+
+          element.addEventListener('mouseup', function(event) {
+              const e = getEvent(event);
+              position.state = 0;
+              const containerL = container.offsetLeft ;
+              const containerT = container.offsetTop;
+              if(parseInt(element.style.left) > containerL && parseInt(element.style.top) > containerT ) {
+                container.style.background = 'red';
+              }else {
+                container.style.background = 'grey';
+              }
+
+          }, false)
+
+      }
+      drag(element, container);
+    
+  </script>
+</body>
+</html>
