@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>drag event</title>
+  <style>
+    #A{
+        width:200px;
+        height:200px;
+        background: pink;
+        margin:10px;
+        z-index:100;
+      }
+
+      #B {
+        width:400px;
+        height:300px;
+        background: grey;
+        position: fixed;
+        right:100px;
+        bottom:100px;
+      }
+  </style>
+</head>
+<body>
+  <div id="A" draggable="true" ></div>
+  <div id="B"></div>
+  <script>
+      window.onload = function() {
+        console.log('xxxx');
+        const element = document.getElementById('A');
+        const target = document.getElementById('B');
+        element.addEventListener('dragStart', function(ev) {
+            console.log('A 元素开始被移动');
+        });
+        target.addEventListener('dragover', function(ev) {
+            ev.preventDefault();
+        });
+        target.addEventListener('drop', function(ev) {
+            ev.preventDefault();
+            target.appendChild(element);
+            target.style.background = 'red';
+        })
+      }
+  </script>
+</body>
+</html>
