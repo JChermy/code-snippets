@@ -1,3 +1,8 @@
+/**
+* 深拷贝函数
+* @param1 parent
+* @param2 copy
+*/
 function deepCopy(parent, copy) {
     copy = copy || {}
     for(var i in parent) {

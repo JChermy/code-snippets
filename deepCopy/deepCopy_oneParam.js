@@ -1,3 +1,7 @@
+/**
+ * 深拷贝函数
+ * @param obj
+ */
 function deepCopy(obj) {
     let result = {}
     let keys = Object.keys(obj),
