@@ -17,8 +17,8 @@
         height:300px;
         background: grey;
         position: fixed;
-        right:0px;
-        bottom:0px;
+        top: 50%;
+        left: 50%;
       }
   </style>
 </head>
@@ -61,7 +61,14 @@
               position.state = 0;
               const containerL = container.offsetLeft ;
               const containerT = container.offsetTop;
-              if(parseInt(element.style.left) > containerL && parseInt(element.style.top) > containerT ) {
+              const containerW = container.offsetWidth;
+              const containerH = container.offsetHeight;
+
+              const elementL = element.offsetLeft ;
+              const elementT = element.offsetTop;
+              const elementW = element.offsetWidth;
+              const elementH = element.offsetHeight;
+              if(elementL > containerL && elementL+elementW  < containerL+containerW && elementT > containerT && elementT+elementH < containerT+containerH) {
                 container.style.background = 'red';
               }else {
                 container.style.background = 'grey';
