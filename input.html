@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>auto complete</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        #input {
+            width: 300px;
+            height: 30px;
+            margin: 0 auto;
+        }
+        ul {
+            list-style: none;
+            margin: 0 auto;
+            width: 300px;
+            background-color:lightpink;
+            color: white;
+        }
+        li {
+            cursor: pointer;
+            height: 30px;
+        }
+        #wrapper {
+            width: 300px;
+            margin: 200px auto;
+            position: relative;
+        }
+        .selected {
+            background-color:red;
+        }
+    </style>
+</head>
+<body>
+    <div id='wrapper'>
+        <input  type= "text" id="input"/>
+        <ul id="ul">
+        </ul>
+    </div> 
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+    <script>
+          const arr = ['12345678','122222', 'apple', 'app','axio','bear','ball', 'banana', 'box'];
+          const ele = document.getElementById('input');
+          const ul = document.getElementById('ul');
+          let liSelected;
+          ele.addEventListener('input', function(e){
+              const value = e.target.value.trim();
+              if(value) {
+                  getListData(value);
+
+                  let listItems = $('li');
+                  $('input').keydown(function(e) {
+                      var key = e.keyCode,
+                               selected = listItems.filter('.selected'),
+                               current;
+                      if(key !== 40 && key !== 38) return;
+                      listItems.removeClass('selected');
+
+                      if(key == 40) { //down key
+                        if( !selected.length || selected.is(':last-child')) {
+                            current = listItems.eq(0);
+                        }else {
+                            current = selected.next();
+                        }
+                      }else if(key == 38) { //up key
+                        if( !selected.length || selected.is(':first-child')) {
+                            current = listItems.last();
+                        }else {
+                            current = selected.prev();
+                        }
+                      }
+                      current.addClass('selected');
+
+                  })
+              } else {
+                  ul.innerHTML = "";
+              }
+          });
+
+          function getListData(inputValue) {
+              const lis = [];
+              arr.forEach(function(item) {
+                  if(item.startsWith(inputValue) && inputValue) {
+                        lis.push(`<li>${item}</li>`);
+                  }
+              })
+              ul.innerHTML = lis.join("");
+          }
+
+          ul.addEventListener('click', function(e) {
+            const ev = e || window.event;
+            const target = e.target || e.srcElement;
+            if(target.nodeName.toLowerCase() == 'li') {
+                ele.value = target.innerHTML;
+            }
+          });
+
+
+
+
+    </script>
+</body>
+</html>
