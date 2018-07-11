@@ -49,40 +49,18 @@
           const ele = document.getElementById('input');
           const ul = document.getElementById('ul');
           let liSelected;
+          //监听input框输入
           ele.addEventListener('input', function(e){
               const value = e.target.value.trim();
               if(value) {
                   getListData(value);
-
-                  let listItems = $('li');
-                  $('input').keydown(function(e) {
-                      var key = e.keyCode,
-                               selected = listItems.filter('.selected'),
-                               current;
-                      if(key !== 40 && key !== 38) return;
-                      listItems.removeClass('selected');
-
-                      if(key == 40) { //down key
-                        if( !selected.length || selected.is(':last-child')) {
-                            current = listItems.eq(0);
-                        }else {
-                            current = selected.next();
-                        }
-                      }else if(key == 38) { //up key
-                        if( !selected.length || selected.is(':first-child')) {
-                            current = listItems.last();
-                        }else {
-                            current = selected.prev();
-                        }
-                      }
-                      current.addClass('selected');
-
-                  })
+                  keyboardEvent();
               } else {
                   ul.innerHTML = "";
               }
           });
 
+          //从数组中选中匹配的下拉
           function getListData(inputValue) {
               const lis = [];
               arr.forEach(function(item) {
@@ -93,6 +71,38 @@
               ul.innerHTML = lis.join("");
           }
 
+          //处理键盘上下键选择和enter键选中
+          function keyboardEvent() {
+            let listItems = $('li');
+              $('input').keydown(function(e) {
+                  var key = e.keyCode,
+                           selected = listItems.filter('.selected'),
+                           current;
+                  if(key !== 40 && key !== 38 && key !==13) return;
+                  listItems.removeClass('selected');
+
+                  if(key == 40) { //down key
+                    if( !selected.length || selected.is(':last-child')) {
+                        current = listItems.eq(0);
+                    }else {
+                        current = selected.next();
+                    }
+                  }else if(key == 38) { //up key
+                    if( !selected.length || selected.is(':first-child')) {
+                        current = listItems.last();
+                    }else {
+                        current = selected.prev();
+                    }
+                  }else if(key == 13){//enter key
+                      current = selected;
+                      ele.value = current.text();
+                  }
+                  current.addClass('selected');
+
+              })
+          }
+
+          //处理下拉鼠标选择
           ul.addEventListener('click', function(e) {
             const ev = e || window.event;
             const target = e.target || e.srcElement;
@@ -100,9 +110,6 @@
                 ele.value = target.innerHTML;
             }
           });
-
-
-
 
     </script>
 </body>
