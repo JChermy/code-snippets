@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>overlay</title>
+    <style>
+        .overlay {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+        }
+        .overlay article {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -200px 0 0 -200px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <button id="btn">弹出窗口</button>
+    <div class="overlay">
+        <article>
+             I am Jchermy
+        </article>
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+          $('#btn').click(function(){
+                $('.overlay').show();
+          })
+          $('.overlay').click(function(e){
+              if(e.target == e.currentTarget) {
+                $('.overlay').hide();
+              }
+          })
+    </script>
+</body>
+</html>
