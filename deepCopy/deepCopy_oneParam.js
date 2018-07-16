@@ -11,9 +11,9 @@ function deepCopy(obj) {
         key = keys[i];
         temp = obj[key];
         if(temp && typeof temp === 'object') {
-            result.key = deepCopy(temp);
+            result[key] = deepCopy(temp);
         }else {
-            result.key = temp;
+            result[key] = temp;
         }
     }
     return result;
