@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>grid</title>
+  <style>
+        .container {
+            width:1000px;
+            height:300px;
+            background-color: black;
+            display: grid;
+            grid-template-columns: repeat(10, 100px);
+            grid-template-rows: 50px 350px 50px;
+            grid-template-areas:
+              ". h h h h h h h h ."
+              "c c c c c c c c m m"
+              ".f f f f f f f f  ."
+            
+          }
+          .header {
+            grid-area: h;
+            background-color:aqua;
+          }
+          .menu {
+            grid-area: m;
+            background-color: pink;
+          }
+          .content {
+            grid-area: c;
+            background-color: orange;
+          }
+          .footer {
+            grid-area: f;
+            background-color: lightblue;
+          }
+          
+          @media screen and (min-width:600px) {
+            .container{
+              grid-template-areas: 
+              "m m h h h h h h h h"
+              "c c c c c c c c c c"
+              "f f f f f f f f f f"
+            }
+          }
+          
+  </style>
+</head>
+<body>
+   <div class='container'>
+     <div class='header'>HEADER</div>
+     <div class='menu'>MENU</div>
+     <div class='content'>CONTENT</div>
+     <div class='footer'>FOOTER</div>
+   </div>
+  
+</body>
+</html>
