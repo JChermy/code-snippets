@@ -73,19 +73,45 @@ fnCurry(3)(4); //7
 
 
 
-
-function curry(fn, args){
-    var args = args || [];
+//简易版本
+function curry(fn, args) {
     var length = fn.length;
+    var args = args || [];
     return function() {
         var _args = args.slice(0);
-        for(var i=0;i<arguments.length;i++){
+        console.log(_args);
+        for(var i=0;i<arguments.length;i++) {
             _args.push(arguments[i]);
         }
-        if(arguments.length < fn.length) {
-            curry.call(this, fn, _args);
+        if(_args.length<length) {
+            return curry.call(this, fn, _args);
         }else {
-            fn.apply(this, _args);
+            return fn.apply(this, _args);
         }
     }
 }
+
+var add = function(a,b) {
+    return a+b;
+}
+var addCurry = curry(add);
+addCurry(3,4); //7
+addCurry(3)(4); //7
+
+//ES6版本
+const curry = (fn,arr=[]) =>{
+    return (...args) => {
+        if([...arr, ...args].length === fn.length) {
+            return fn(...arr, ...args);
+        }else {
+            return curry(fn, [...arr, ...args]);
+        }
+    }
+}
+
+var add = function(a,b,c,d){
+    return a+b+c+d;
+ }
+var addCurry = curry(add);
+addCurry(1,2,3,4); //10
+addCurry(1)(2)(3)(4); //10
