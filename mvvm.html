@@ -32,6 +32,7 @@
                      val = newVal;
                      //作为发布者发出通知
                      dep.notify();
+                     console.log(val);
                  }
              });
         }
@@ -40,14 +41,14 @@
             var flag = document.createDocumentFragment();
             var child;
             while(child = node.firstChild) {
-                complile(child, vm);
+                compile(child, vm);
                 flag.appendChild(child); //将子节点劫持到文档片段中
             }
             return flag;
         }
 
 
-        function complile(node, vm) {
+        function compile(node, vm) {
             var reg = /\{\{(.*)\}\}/;
             //节点类型为元素
             if(node.nodeType === 1) {
@@ -60,7 +61,7 @@
                             //给相应的data属性赋值，进而触发该属性的set方法
                             vm[name] = e.target.value;
                         });
-                        node.value = vm.value; //将data的值赋给该node
+                        node.value = vm[value]; //将data的值赋给该node
                         node.removeAttribute('v-model');
                     }
                 };
